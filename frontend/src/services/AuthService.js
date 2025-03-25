@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
-const USER_KEY = 'booking_tracker_user';
+const USER_KEY = 'reservation_tracker_user';
 
 class AuthService {
   // Register a new user

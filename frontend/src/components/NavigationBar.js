@@ -15,14 +15,14 @@ const NavigationBar = ({ currentUser, setCurrentUser }) => {
   return (
     <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
       <Container>
-        <Navbar.Brand as={Link} to="/">Booking Tracker</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">Reservation Tracker</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
-            <Nav.Link as={Link} to="/hotels">Hotels</Nav.Link>
+            <Nav.Link as={Link} to="/spaces">Spaces</Nav.Link>
             {currentUser && (
-              <Nav.Link as={Link} to="/bookings">My Bookings</Nav.Link>
+              <Nav.Link as={Link} to="/reservations">My Reservations</Nav.Link>
             )}
           </Nav>
           <Nav>

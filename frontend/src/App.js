@@ -6,10 +6,10 @@ import NavigationBar from './components/NavigationBar';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import HotelList from './pages/HotelList';
-import HotelDetail from './pages/HotelDetail';
-import BookingForm from './pages/BookingForm';
-import BookingsDashboard from './pages/BookingsDashboard';
+import SpaceList from './pages/SpaceList';
+import SpaceDetail from './pages/SpaceDetail';
+import ReservationForm from './pages/ReservationForm';
+import ReservationsDashboard from './pages/ReservationsDashboard';
 import NotFound from './pages/NotFound';
 import AuthService from './services/AuthService';
 
@@ -36,21 +36,21 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/hotels" element={<HotelList />} />
-          <Route path="/hotels/:id" element={<HotelDetail />} />
+          <Route path="/spaces" element={<SpaceList />} />
+          <Route path="/spaces/:id" element={<SpaceDetail />} />
           <Route 
-            path="/bookings/new/:hotelId" 
+            path="/reservations/new/:spaceId" 
             element={
               <PrivateRoute>
-                <BookingForm />
+                <ReservationForm />
               </PrivateRoute>
             } 
           />
           <Route 
-            path="/bookings" 
+            path="/reservations" 
             element={
               <PrivateRoute>
-                <BookingsDashboard />
+                <ReservationsDashboard />
               </PrivateRoute>
             } 
           />

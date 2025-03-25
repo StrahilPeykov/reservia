@@ -7,12 +7,12 @@ const Home = () => {
     <Container>
       <Row className="mb-5">
         <Col className="text-center">
-          <h1 className="display-4 mb-4">Welcome to Booking Tracker</h1>
+          <h1 className="display-4 mb-4">Welcome to Reservia</h1>
           <p className="lead">
-            Your one-stop solution for booking hotels and managing your reservations.
+            Your one-stop solution for reserving library study spaces and managing your reservations.
           </p>
-          <Button as={Link} to="/hotels" variant="primary" size="lg" className="mt-3">
-            Browse Hotels
+          <Button as={Link} to="/spaces" variant="primary" size="lg" className="mt-3">
+            Browse Study Spaces
           </Button>
         </Col>
       </Row>
@@ -21,12 +21,12 @@ const Home = () => {
         <Col md={4} className="mb-4">
           <Card className="h-100">
             <Card.Body className="d-flex flex-column">
-              <Card.Title>Find Hotels</Card.Title>
+              <Card.Title>Find Study Spaces</Card.Title>
               <Card.Text>
-                Browse through our collection of handpicked hotels around the world.
+                Browse through our collection of available study rooms, pods, and collaborative spaces.
               </Card.Text>
-              <Button as={Link} to="/hotels" variant="outline-primary" className="mt-auto">
-                Browse Hotels
+              <Button as={Link} to="/spaces" variant="outline-primary" className="mt-auto">
+                Browse Spaces
               </Button>
             </Card.Body>
           </Card>
@@ -35,9 +35,9 @@ const Home = () => {
         <Col md={4} className="mb-4">
           <Card className="h-100">
             <Card.Body className="d-flex flex-column">
-              <Card.Title>Book Your Stay</Card.Title>
+              <Card.Title>Book Your Space</Card.Title>
               <Card.Text>
-                Easy booking process with instant confirmation and best price guarantee.
+                Easy reserving process with time slot selection and instant confirmation.
               </Card.Text>
               <Button as={Link} to="/login" variant="outline-primary" className="mt-auto">
                 Login to Book
@@ -49,12 +49,12 @@ const Home = () => {
         <Col md={4} className="mb-4">
           <Card className="h-100">
             <Card.Body className="d-flex flex-column">
-              <Card.Title>Manage Bookings</Card.Title>
+              <Card.Title>Manage Reservations</Card.Title>
               <Card.Text>
-                View, modify or cancel your bookings easily from your dashboard.
+                View, modify or cancel your reservations easily from your dashboard.
               </Card.Text>
-              <Button as={Link} to="/bookings" variant="outline-primary" className="mt-auto">
-                My Bookings
+              <Button as={Link} to="/reservations" variant="outline-primary" className="mt-auto">
+                My Reservations
               </Button>
             </Card.Body>
           </Card>
