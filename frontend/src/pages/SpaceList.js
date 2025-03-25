@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button, Form, InputGroup, Accordion } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Form, InputGroup, Accordion, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import SpaceService from '../services/SpaceService';
 

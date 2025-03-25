@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Form, Button, Card, Row, Col, Alert } from 'react-bootstrap';
+import { Container, Form, Button, Card, Row, Col, Alert, Badge } from 'react-bootstrap';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import SpaceService from '../services/SpaceService';
 import ReservationService from '../services/ReservationService';
