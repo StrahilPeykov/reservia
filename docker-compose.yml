@@ -3,16 +3,16 @@ version: '3.8'
 services:
   mysql:
     image: mysql:8.0
-    container_name: booking-tracker-mysql
+    container_name: reservation-tracker-mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: booking_tracker
+      MYSQL_DATABASE: reservation_tracker
     ports:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
-      - booking-network
+      - reservation-network
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ppassword"]
       interval: 10s
@@ -21,25 +21,40 @@ services:
 
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: booking-tracker-backend
+      context: ./
+      dockerfile: backend/Dockerfile
+    container_name: reservation-tracker-backend
     depends_on:
       mysql:
         condition: service_healthy
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/booking_tracker?useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/reservation_tracker?useSSL=false&serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=password
     networks:
-      - booking-network
+      - reservation-network
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: reservation-tracker-frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8080/api
+    networks:
+      - reservation-network
     restart: always
 
 volumes:
   mysql-data:
 
 networks:
-  booking-network:
+  reservation-network:
     driver: bridge
