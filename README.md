@@ -78,7 +78,7 @@ reservia/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/reservia.git
+   git clone https://github.com/StrahilPeykov/reservia
    cd reservia
    ```
 
