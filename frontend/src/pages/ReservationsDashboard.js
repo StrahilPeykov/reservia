@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Container, Table, Button, Alert, Card, Nav, Badge } from 'react-bootstrap';
 import { useLocation, Link } from 'react-router-dom';
 import ReservationService from '../services/ReservationService';
+import LoadingSpinner from '../components/LoadingSpinner';
+import ReservationQRCode from '../components/ReservationQRCode';
 
 const ReservationsDashboard = () => {
   const location = useLocation();
@@ -11,6 +13,8 @@ const ReservationsDashboard = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(location.state?.success || '');
   const [view, setView] = useState('upcoming'); // 'upcoming' or 'all'
+  const [showQrCode, setShowQrCode] = useState(false);
+  const [selectedReservation, setSelectedReservation] = useState(null);
   
   useEffect(() => {
     loadReservations();
@@ -82,6 +86,11 @@ const ReservationsDashboard = () => {
     
     return <Badge bg={variant}>{status}</Badge>;
   };
+
+  const handleShowQrCode = (reservation) => {
+    setSelectedReservation(reservation);
+    setShowQrCode(true);
+  };
   
   return (
     <Container className="my-4">
@@ -119,12 +128,7 @@ const ReservationsDashboard = () => {
       </Nav>
       
       {loading ? (
-        <div className="text-center my-5">
-          <div className="spinner-border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-          <p className="mt-2">Loading your reservations...</p>
-        </div>
+        <LoadingSpinner message="Loading your reservations..." />
       ) : reservations.length === 0 ? (
         <Card className="text-center p-5">
           <Card.Body>
@@ -151,20 +155,29 @@ const ReservationsDashboard = () => {
           <tbody>
             {reservations.map((reservation) => (
               <tr key={reservation.id}>
-                <td>
-                  <Link to={`/spaces/${reservation.spaceId}`}>
-                    {reservation.spaceName}
-                  </Link>
-                </td>
-                <td>{formatDate(reservation.date)}</td>
-                <td>
-                  {formatTime(reservation.startTime)} - {formatTime(reservation.endTime)}
-                </td>
-                <td>
-                  {getStatusBadge(reservation.status)}
-                </td>
-                <td>
-                  {reservation.status === 'CONFIRMED' && (
+              <td>
+                <Link to={`/spaces/${reservation.spaceId}`}>
+                  {reservation.spaceName}
+                </Link>
+              </td>
+              <td>{formatDate(reservation.date)}</td>
+              <td>
+                {formatTime(reservation.startTime)} - {formatTime(reservation.endTime)}
+              </td>
+              <td>
+                {getStatusBadge(reservation.status)}
+              </td>
+              <td>
+                {reservation.status === 'CONFIRMED' && (
+                  <>
+                    <Button 
+                      variant="outline-primary" 
+                      size="sm"
+                      className="me-2"
+                      onClick={() => handleShowQrCode(reservation)}
+                    >
+                      <i className="bi bi-qr-code me-1"></i> QR
+                    </Button>
                     <Button 
                       variant="outline-danger" 
                       size="sm"
@@ -172,13 +185,21 @@ const ReservationsDashboard = () => {
                     >
                       Cancel
                     </Button>
-                  )}
-                </td>
-              </tr>
+                  </>
+                )}
+              </td>
+            </tr>
             ))}
           </tbody>
         </Table>
       )}
+      {selectedReservation && (
+      <ReservationQRCode 
+        reservation={selectedReservation}
+        show={showQrCode}
+        onHide={() => setShowQrCode(false)}
+      />
+    )}
     </Container>
   );
 };
