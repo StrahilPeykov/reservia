@@ -21,6 +21,15 @@ class SpaceService {
       });
   }
 
+  getPagedSpaces(page = 0, size = 9) {
+    console.log(`Fetching paged spaces - page: ${page}, size: ${size} from: ${api.defaults.baseURL}/spaces/paged?page=${page}&size=${size}`);
+    return api.get(`/spaces/paged?page=${page}&size=${size}`)
+      .catch(error => {
+        console.error(`Error fetching paged spaces:`, error.response || error);
+        throw error;
+      });
+  }
+
   // Search spaces by location
   searchSpacesByLocation(location) {
     console.log(`Searching spaces by location '${location}' from: ${api.defaults.baseURL}/spaces/search?location=${location}`);

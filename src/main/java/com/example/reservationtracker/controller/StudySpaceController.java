@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import com.example.reservationtracker.dto.SpaceDto.SpaceFilterRequest;
 import com.example.reservationtracker.dto.SpaceDto.SpaceResponse;
@@ -11,8 +14,11 @@ import com.example.reservationtracker.model.StudySpace;
 import com.example.reservationtracker.model.StudySpace.NoiseLevel;
 import com.example.reservationtracker.service.StudySpaceService;
 
+
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/spaces")
@@ -118,5 +124,38 @@ public class StudySpaceController {
                 studySpace.getNoiseLevel(),
                 studySpace.getImageUrl()
         );
+    }
+    @GetMapping("/paged")
+    public ResponseEntity<Map<String, Object>> getAllSpacesPaged(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "9") int size) {
+        
+        log.info("GET request received for paged spaces - page: {}, size: {}", page, size);
+        try {
+            // Create Pageable object
+            Pageable pageable = PageRequest.of(page, size);
+            
+            // Get paginated result
+            Page<StudySpace> pageSpaces = studySpaceService.getAllSpacesPaged(pageable);
+            
+            // Get content for current page
+            List<SpaceResponse> spaces = pageSpaces.getContent().stream()
+                    .map(this::mapToDto)
+                    .collect(Collectors.toList());
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("spaces", spaces);
+            response.put("currentPage", pageSpaces.getNumber());
+            response.put("totalItems", pageSpaces.getTotalElements());
+            response.put("totalPages", pageSpaces.getTotalPages());
+            
+            log.info("Returning paged response with {} spaces, page {}/{}", 
+                    spaces.size(), pageSpaces.getNumber(), pageSpaces.getTotalPages());
+            
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("Error fetching paged spaces", e);
+            throw e;
+        }
     }
 }

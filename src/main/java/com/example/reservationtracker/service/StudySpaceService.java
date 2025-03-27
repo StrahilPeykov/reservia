@@ -2,6 +2,8 @@ package com.example.reservationtracker.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.example.reservationtracker.model.StudySpace;
 import com.example.reservationtracker.model.StudySpace.NoiseLevel;
@@ -46,5 +48,8 @@ public class StudySpaceService {
     
     public List<StudySpace> getSpacesByFilters(String type, Integer capacity, NoiseLevel noiseLevel) {
         return studySpaceRepository.findByFilters(type, capacity, noiseLevel);
+    }
+    public Page<StudySpace> getAllSpacesPaged(Pageable pageable) {
+        return studySpaceRepository.findAll(pageable);
     }
 }
