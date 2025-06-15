@@ -145,7 +145,7 @@ The frontend will be available at http://localhost:3000.
 ### Reservations
 - `POST /api/reservations` - Create a new reservation
 - `GET /api/reservations` - Get all reservations for the current user
-- `GET /api/reservations/upcoming` - Get upcoming reservations
+- `GET /api/reservations/upcoming` - Get upcoming reservations 
 - `DELETE /api/reservations/{id}` - Cancel a reservation
 - `PUT /api/reservations/{id}` - Extend a reservation
 - `POST /api/reservations/availability` - Check time slot availability
